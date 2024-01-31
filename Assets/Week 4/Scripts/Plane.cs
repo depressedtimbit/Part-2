@@ -6,11 +6,15 @@ using UnityEngine;
 public class Plane : MonoBehaviour
 {
     public List<Vector2> points;
+    public List<Sprite> sprites;
     public float newPointThreshold = 0.2f;
     public float speed = 1;
     public AnimationCurve landingCurve;
+    public Vector2 spawnCentre;
+    public float spawnArea;
     Vector2 lastPos;
     LineRenderer lineRenderer;
+    SpriteRenderer spriteRenderer;
     Rigidbody2D rb;
     Vector2 currentPos;
     float landingTimer;
@@ -19,6 +23,24 @@ public class Plane : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         lineRenderer = GetComponent<LineRenderer>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+
+        Sprite randomSprite =  sprites[Random.Range(0, sprites.Count)];
+
+        spriteRenderer.sprite = randomSprite;
+
+        Vector2 spawnPos = new Vector2(
+            Random.Range(spawnCentre.x-spawnArea, spawnCentre.x+spawnArea),
+            Random.Range(spawnCentre.y-spawnArea, spawnCentre.y+spawnArea)
+            );
+        rb.position = spawnPos;
+        Vector2 direction = Vector2.zero - spawnPos;
+        float angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
+        rb.rotation = -angle;
+        
+
+        
         lineRenderer.positionCount = 1;
         lineRenderer.SetPosition(0, transform.position);
     }

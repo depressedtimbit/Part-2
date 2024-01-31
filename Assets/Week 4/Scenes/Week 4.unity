@@ -249,6 +249,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   points: []
+  sprites:
+  - {fileID: 21300000, guid: c73a14ae579ec794db786a6cb7b74e20, type: 3}
+  - {fileID: 21300000, guid: 24c052ba7e2db304696a436c1d715f04, type: 3}
+  - {fileID: 21300000, guid: 6bf9530ecd83c664099aa71dd0a5223e, type: 3}
+  - {fileID: 21300000, guid: 3c91ca5ea46cd97409cdc7acb86e3523, type: 3}
   newPointThreshold: 0.2
   speed: 1
   landingCurve:
@@ -275,6 +280,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  spawnCentre: {x: 0, y: 0}
+  spawnArea: 10
 --- !u!60 &1595442123
 PolygonCollider2D:
   m_ObjectHideFlags: 0
