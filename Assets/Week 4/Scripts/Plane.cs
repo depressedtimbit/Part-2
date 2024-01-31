@@ -7,11 +7,15 @@ public class Plane : MonoBehaviour
 {
     public List<Vector2> points;
     public float newPointThreshold = 0.2f;
+    public float speed = 1;
     Vector2 lastPos;
     LineRenderer lineRenderer;
+    Rigidbody2D rb;
+    Vector2 currentPos;
 
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = 1;
         lineRenderer.SetPosition(0, transform.position);
@@ -24,6 +28,36 @@ public class Plane : MonoBehaviour
         points.Add(newPos);
         lineRenderer.positionCount = 1;
         lineRenderer.SetPosition(0, transform.position);
+    }
+
+    void FixedUpdate()
+    {
+        currentPos = transform.position;
+        if(points.Count > 0)
+        {
+            Vector2 direction = points[0] - currentPos;
+            float angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
+            rb.rotation = -angle;
+        }
+        rb.MovePosition(rb.position + (Vector2)transform.up * speed * Time.deltaTime);
+    }
+
+    void Update()
+    {
+        lineRenderer.SetPosition(0, transform.position);
+        if(points.Count > 0)
+        {
+           if(Vector2.Distance(currentPos, points[0]) < newPointThreshold)
+           {
+                points.RemoveAt(0);
+                
+                for(int i = 0; i < lineRenderer.positionCount - 2; i++) 
+                {
+                    lineRenderer.SetPosition(i, lineRenderer.GetPosition(i + 1));
+                }
+                lineRenderer.positionCount--;
+           }
+        }
     }
 
     void OnMouseDrag()
