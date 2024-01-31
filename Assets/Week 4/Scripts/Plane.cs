@@ -109,14 +109,20 @@ public class Plane : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D()
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        WarnTri.SetActive(true);
+        if(collision.gameObject.tag == "Player")
+        {
+            WarnTri.SetActive(true);
+        }
     }
     
-    void OnTriggerExit2D()
+    void OnTriggerExit2D(Collider2D collision)
     {
-        WarnTri.SetActive(false);
+        if(collision.gameObject.tag == "Player")
+        {
+            WarnTri.SetActive(false);
+        }
     }
 
     void OnTriggerStay2D(Collider2D collision)
