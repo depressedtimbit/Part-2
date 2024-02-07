@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,7 +8,6 @@ public class Plane : MonoBehaviour
     public List<Sprite> sprites;
     public float newPointThreshold = 0.2f;
     public float speed = 1;
-    public AnimationCurve landingCurve;
     public Vector2 spawnCentre;
     public float spawnArea;
     Vector2 lastPos;
@@ -17,14 +15,17 @@ public class Plane : MonoBehaviour
     SpriteRenderer spriteRenderer;
     Rigidbody2D rb;
     Vector2 currentPos;
+    GameObject WarnTri;
+    public AnimationCurve landingCurve;
     float landingTimer;
+    bool isLanding;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         lineRenderer = GetComponent<LineRenderer>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-
+        WarnTri = transform.GetChild(0).gameObject;
 
         Sprite randomSprite =  sprites[Random.Range(0, sprites.Count)];
 
@@ -68,7 +69,7 @@ public class Plane : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKey(KeyCode.Space))
+        if(isLanding)
         {
             landingTimer += 0.5f * Time.deltaTime;
             float interpolation = landingCurve.Evaluate(landingTimer);
@@ -107,4 +108,31 @@ public class Plane : MonoBehaviour
             lastPos = newPos;
         }
     }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Player")
+        {
+            WarnTri.SetActive(true);
+        }
+    }
+    
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Player")
+        {
+            WarnTri.SetActive(false);
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        if(Vector3.Distance(transform.position, collision.gameObject.transform.position)<0.5) 
+        {
+            isLanding = true;
+        }
+        
+
+    }
+    
 }

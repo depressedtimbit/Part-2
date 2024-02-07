@@ -12,6 +12,8 @@ public class Spawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Instantiate(SpawnerPrefab, transform);
+        timer = 0;
         timerTarget = Random.Range(minTime, maxTime);
     }
 
