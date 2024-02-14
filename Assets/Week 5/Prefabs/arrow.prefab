@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
-  inital_vel: 300
+  inital_vel: 600
 --- !u!212 &1384098453574863814
 SpriteRenderer:
   m_ObjectHideFlags: 0
