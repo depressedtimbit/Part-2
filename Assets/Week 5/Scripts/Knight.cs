@@ -8,6 +8,7 @@ public class Knight : MonoBehaviour
     Animator animator;
     Vector2 destination; 
     Vector2 movement;
+    public Vector2 InitalDestination;
     bool clickOnSelf = false;
     public float speed = 3;
     public float health;
@@ -19,6 +20,8 @@ public class Knight : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         health = maxhealth;
+        destination = InitalDestination; //destination used to initalize to 0, 0 which would cause the knight to walk to the centre upon spawning (which isnt noticable when spawned at 0, 0)
+                                        //having the effect of walking as soon as the scene starts (ie from outside the screen) was nice so i added a way to set where the player initally walks
     }
 
     private void FixedUpdate() 
