@@ -5,13 +5,16 @@ using UnityEngine;
 public class PlayerSaveManager : MonoBehaviour
 {
     // Start is called before the first frame update
+    Knight knight;
+    HealthBar healthBar;
     float currentHealth;
     void Start()
-    {
+    {   
+        knight = GetComponent<Knight>();
+        healthBar = GetComponent<HealthBar>();
         float InitHealth = PlayerPrefs.GetFloat("PlayerHealth", 5);
         Debug.Log(InitHealth.ToString());
-        SendMessage("TakeDamage", 99);
-        SendMessage("TakeDamage", -InitHealth);
+        SendMessage("setHealth", InitHealth);
         currentHealth = InitHealth;
     }
 

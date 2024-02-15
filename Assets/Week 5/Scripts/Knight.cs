@@ -64,8 +64,12 @@ public class Knight : MonoBehaviour
 
     public void TakeDamage(float damage)
     {   
-        health -= damage;
-        health = Mathf.Clamp(health, 0, maxhealth);
+        setHealth(health - damage);
+    }
+
+    public void setHealth(float h)
+    {
+         health = Mathf.Clamp(h, 0, maxhealth);
         if(health == 0) 
         {
             animator.SetTrigger("Death");

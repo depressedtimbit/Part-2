@@ -10,6 +10,10 @@ public class HealthBar : MonoBehaviour
     public void TakeDamage(float damage)
     {
         slider.value -= damage;
+    }
 
+    public void setHealth(float health)
+    {
+        slider.value = health;
     }
 }
